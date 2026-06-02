@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
+import Image from 'next/image'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -87,30 +88,30 @@ export default function Navbar() {
               href="/"
               className="group flex items-center gap-3"
             >
-              <div
+              <Image
+                src="/logo-1.png"
+                alt="SkillMatch AI"
+                width={140}
+                height={40}
+                priority
                 className="
-                  h-3 w-3 rounded-full
-
-                  bg-linear-to-br
-                  from-(--secondary)
-                  to-(--primary)
-
-                  shadow-[0_0_20px_rgba(124,156,255,0.7)]
-
-                  transition-transform duration-300
-                  group-hover:scale-110
-                "
+      h-8 w-auto
+      transition-transform duration-300
+      group-hover:scale-105
+    "
               />
 
               <span
                 className="
-                  font-heading
-                  text-base md:text-lg
-                  font-bold
+      hidden sm:block
 
-                  tracking-[-0.03em]
-                  text-white
-                "
+      font-heading
+      text-base md:text-lg
+      font-bold
+
+      tracking-[-0.03em]
+      text-white
+    "
               >
                 SkillMatch AI
               </span>
