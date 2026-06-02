@@ -23,6 +23,7 @@ export default function TeamSection() {
                         <TeamCard
                             key={member.name}
                             image={member.image}
+                            initials={member.initials}
                             name={member.name}
                             role={member.role}
                             bio={member.bio}

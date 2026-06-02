@@ -48,35 +48,34 @@ export const recommendations: {
   tags: string[];
 }[] = [];
 
-export const teamMembers: {
-  initials: string;
-  name: string;
-  role: string;
-  bio: string;
-}[] = [
+export const teamMembers = [
   {
+    image: "/team/faiz.jpg",
     initials: "FF",
     name: "Faiz Fajar",
     role: "Project Lead & Back-End Developer",
-    bio: "......",
+    bio: "Leads project development and builds scalable backend systems, APIs, and infrastructure powering SkillMatch AI.",
   },
   {
+    image: "/team/hizkian.jpg",
     initials: "H",
     name: "Hizkian",
     role: "Machine Learning Engineer",
-    bio: "....",
+    bio: "Focuses on data preparation, model evaluation, and optimizing AI performance for accurate career recommendations.",
   },
   {
+    image: "/team/adinda.jpg",
     initials: "AP",
     name: "Adinda Putri Nur R.",
     role: "Machine Learning Engineer",
-    bio: ".....",
+    bio: "Develops machine learning models and recommendation algorithms to deliver personalized career insights.",
   },
   {
+    image: "/team/hana.jpg",
     initials: "HF",
     name: "Hana Fithri Sabiila",
     role: "Front-End Developer",
-    bio: "......",
+    bio: "Designs and implements intuitive user interfaces to create a seamless and engaging user experience.",
   },
 ];
 
