@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import Button from '@/components/ui/Button'
 import GradientText from '@/components/ui/GradientText'
+import Image from 'next/image'
 
 const footerLinks = [
   {
@@ -90,36 +91,19 @@ export default function Footer() {
         >
           {/* Brand */}
           <div>
-            <Link
-              href="/"
-              className="group flex items-center gap-3"
-            >
-              <div
+            <Link href="/" className="group">
+              <Image
+                src="/logo-2.png"
+                alt="SkillMatch AI"
+                width={160}
+                height={54}
                 className="
-                  h-3 w-3 rounded-full
+      h-18 w-auto
 
-                  bg-linear-to-br
-                  from-(--secondary)
-                  to-(--primary)
-
-                  shadow-[0_0_20px_rgba(124,156,255,0.7)]
-
-                  transition-transform duration-300
-                  group-hover:scale-110
-                "
+      transition-transform duration-300
+      group-hover:scale-105
+    "
               />
-
-              <span
-                className="
-                  font-heading
-                  text-lg font-bold
-
-                  tracking-tight
-                  text-white
-                "
-              >
-                SkillMatch AI
-              </span>
             </Link>
 
             <p
