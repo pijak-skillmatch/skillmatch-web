@@ -138,10 +138,6 @@ export default function HeroSection() {
                                     <span className="h-3 w-3 rounded-full bg-yellow-400/80" />
                                     <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
                                 </div>
-
-                                <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-400">
-                                    Career Match Preview
-                                </div>
                             </div>
 
                             {/* Dashboard */}
