@@ -3,8 +3,6 @@ import Footer from '@/components/layout/Footer'
 
 import Button from '@/components/ui/Button'
 import GradientText from '@/components/ui/GradientText'
-import SectionHeader from '@/components/ui/SectionHeader'
-import GlassPanel from '@/components/ui/GlassPanel'
 
 import MissionSection from '@/components/about/MissionSection'
 import TeamSection from '@/components/about/TeamSection'
