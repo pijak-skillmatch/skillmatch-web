@@ -6,15 +6,15 @@ import GradientText from '@/components/ui/GradientText'
 const footerLinks = [
   {
     label: 'Privacy',
-    href: '#',
+    href: '/privacy',
   },
   {
     label: 'Terms',
-    href: '#',
+    href: '/terms',
   },
   {
     label: 'Contact',
-    href: '#',
+    href: '/contact',
   },
 ]
 
