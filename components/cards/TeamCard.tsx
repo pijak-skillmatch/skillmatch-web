@@ -20,8 +20,15 @@ export default function TeamCard({
     <GlassPanel
       className="
         group relative overflow-hidden
+
+        flex flex-col items-center
+
         p-7
+
+        text-center
+
         transition-all duration-500
+
         hover:-translate-y-1.5
       "
     >
@@ -29,10 +36,13 @@ export default function TeamCard({
       <div
         className="
           pointer-events-none absolute inset-0 opacity-0
+
           bg-linear-to-br
           from-(--secondary)/10
           to-(--primary)/10
+
           transition-opacity duration-500
+
           group-hover:opacity-100
         "
       />
@@ -41,21 +51,30 @@ export default function TeamCard({
       <div
         className="
           relative z-10
+
           h-28 w-28
+
           overflow-hidden
+
           rounded-full
+
           bg-linear-to-br
           from-(--secondary)
           to-(--primary)
+
           p-0.5
+
           shadow-[0_0_30px_rgba(124,156,255,0.22)]
         "
       >
         <div
           className="
             relative h-full w-full
+
             overflow-hidden
+
             rounded-full
+
             bg-slate-900
           "
         >
@@ -67,7 +86,9 @@ export default function TeamCard({
               sizes="112px"
               className="
                 object-cover
+
                 transition-transform duration-500
+
                 group-hover:scale-110
               "
             />
@@ -75,8 +96,11 @@ export default function TeamCard({
             <div
               className="
                 flex h-full w-full
+
                 items-center justify-center
+
                 text-2xl font-bold
+
                 text-white
               "
             >
@@ -87,11 +111,13 @@ export default function TeamCard({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mt-6">
+      <div className="relative z-10 mt-6 text-center">
         <h3
           className="
             text-xl font-bold
+
             tracking-tight
+
             text-white
           "
         >
@@ -101,7 +127,9 @@ export default function TeamCard({
         <div
           className="
             mt-2
+
             text-sm font-medium
+
             text-slate-400
           "
         >
@@ -110,8 +138,12 @@ export default function TeamCard({
 
         <p
           className="
-            mt-5
+            mx-auto mt-5
+
+            max-w-xs
+
             text-sm leading-7
+
             text-slate-400
           "
         >
