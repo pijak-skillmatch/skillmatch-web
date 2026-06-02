@@ -18,11 +18,11 @@ export default function TeamSection() {
           "
                 />
 
-                <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                <div className="mt-16 grid gap-8 lg:grid-cols-4">
                     {teamMembers.map((member) => (
                         <TeamCard
                             key={member.name}
-                            initials={member.initials}
+                            image={member.image}
                             name={member.name}
                             role={member.role}
                             bio={member.bio}
