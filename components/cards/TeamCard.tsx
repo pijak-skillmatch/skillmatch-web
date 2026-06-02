@@ -1,14 +1,15 @@
 import GlassPanel from '@/components/ui/GlassPanel'
+import Image from 'next/image'
 
 interface TeamCardProps {
-  initials: string
+  image: string
   name: string
   role: string
   bio: string
 }
 
 export default function TeamCard({
-  initials,
+  image,
   name,
   role,
   bio,
@@ -45,7 +46,9 @@ export default function TeamCard({
         className="
           relative z-10
 
-          flex h-16 w-16 items-center justify-center
+          h-20 w-20
+
+          overflow-hidden
 
           rounded-2xl
 
@@ -53,12 +56,29 @@ export default function TeamCard({
           from-(--secondary)
           to-(--primary)
 
-          text-lg font-bold text-white
+          p-[2px]
 
           shadow-[0_0_30px_rgba(124,156,255,0.22)]
         "
       >
-        {initials}
+        <div
+          className="
+            relative h-full w-full
+            overflow-hidden rounded-2xl
+          "
+        >
+          <Image
+            src={image}
+            alt={name}
+            fill
+            sizes="96px"
+            className="
+              object-cover
+              transition-transform duration-500
+              group-hover:scale-110
+            "
+          />
+        </div>
       </div>
 
       {/* Content */}
