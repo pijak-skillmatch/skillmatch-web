@@ -14,6 +14,7 @@ interface ButtonProps {
   >
 
   type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
 }
 
 export default function Button({
@@ -23,6 +24,7 @@ export default function Button({
   className = '',
   onClick,
   type = 'button',
+  disabled = false,
 }: ButtonProps) {
   const baseStyles = `
     inline-flex items-center justify-center
@@ -103,8 +105,16 @@ export default function Button({
   return (
     <button
       type={type}
-      className={finalClass}
+      className={`
+    ${finalClass}
+
+    ${disabled
+          ? 'opacity-50 cursor-not-allowed'
+          : ''
+        }
+  `}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
