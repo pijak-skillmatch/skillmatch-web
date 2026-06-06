@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { FiChevronDown } from 'react-icons/fi'
 import Button from '@/components/ui/Button'
 import GradientText from '@/components/ui/GradientText'
 import GlassPanel from '@/components/ui/GlassPanel'
@@ -213,21 +214,7 @@ export default function HeroSection() {
                 group-hover:bg-white/10
               "
                         >
-                            <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                className="transition-transform duration-300 group-hover:translate-y-0.5"
-                            >
-                                <path
-                                    d="M12 5v14m0 0 6-6m-6 6-6-6"
-                                    stroke="currentColor"
-                                    strokeWidth="1.8"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
+                            <FiChevronDown className="text-2xl transition-transform duration-300 group-hover:translate-y-0.5" />
                         </span>
                     </a>
                 </div>

@@ -4,38 +4,48 @@
 // Backend integration should replace these with real API calls.
 // ---------------------------------------------------------------------------
 
+import type { ReactNode } from 'react'
+import {
+  FiArrowUpRight,
+  FiCpu,
+  FiSearch,
+  FiStar,
+  FiTrendingUp,
+  FiZap,
+} from 'react-icons/fi'
+
 export const features: {
-  icon: string;
+  icon: ReactNode;
   title: string;
   description: string;
 }[] = [
   {
-    icon: "🧠",
+    icon: <FiCpu />,
     title: "AI Skill Profiling",
     description: "Analyze your skills and interests using intelligent profiling powered by machine learning.",
   },
   {
-    icon: "🎯",
+    icon: <FiStar />,
     title: "Personalized Career Match",
     description: "Receive career recommendations tailored specifically to your strengths and goals.",
   },
   {
-    icon: "📈",
+    icon: <FiTrendingUp />,
     title: "Growth Roadmap",
     description: "Discover which skills to improve next and build a clearer roadmap for your future.",
   },
   {
-    icon: "⚡",
+    icon: <FiZap />,
     title: "Fast Recommendations",
     description: "Generate intelligent career insights in seconds through an intuitive guided flow.",
   },
   {
-    icon: "🔍",
+    icon: <FiSearch />,
     title: "Deep Skill Analysis",
     description: "Understand how your abilities align with modern industry demands and opportunities.",
   },
   {
-    icon: "🚀",
+    icon: <FiArrowUpRight />,
     title: "Future-Oriented Insights",
     description: "Explore emerging career paths and technologies relevant to your evolving potential.",
   },

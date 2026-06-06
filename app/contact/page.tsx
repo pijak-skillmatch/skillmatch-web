@@ -1,24 +1,12 @@
 import React from 'react'
+import { FiArrowLeft } from 'react-icons/fi'
 import Button from '@/components/ui/Button'
 
 export default function ContactPage() {
     return (<main className="container-custom py-32 text-white"> <div className="max-w-4xl mx-auto"> 
 
         <Button href="/" variant="icon" className="mb-8">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                className="h-6 w-6"
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 19l-7-7 7-7"
-                />
-            </svg>
+            <FiArrowLeft className="h-6 w-6" />
         </Button>
 
         <h1 className="text-4xl font-bold mb-8">Contact Us</h1>

@@ -1,3 +1,15 @@
+import {
+    FiAward,
+    FiBarChart2,
+    FiBookOpen,
+    FiCpu,
+    FiDollarSign,
+    FiHeartPulse,
+    FiPackage,
+    FiShoppingBag,
+    FiTrendingUp,
+} from 'react-icons/fi'
+
 interface Props {
     industry: string
     probability: number
@@ -16,14 +28,14 @@ export default function IndustryMatchCard({
         )
 
     const industryIcons:
-        Record<string, string> = {
-        Software: '💻',
-        Finance: '💰',
-        Healthcare: '🏥',
-        Education: '🎓',
-        Marketing: '📈',
-        Manufacturing: '🏭',
-        Retail: '🛒',
+        Record<string, JSX.Element> = {
+        Software: <FiCpu className="h-12 w-12" />,
+        Finance: <FiDollarSign className="h-12 w-12" />,
+        Healthcare: <FiHeartPulse className="h-12 w-12" />,
+        Education: <FiBookOpen className="h-12 w-12" />,
+        Marketing: <FiBarChart2 className="h-12 w-12" />,
+        Manufacturing: <FiPackage className="h-12 w-12" />,
+        Retail: <FiShoppingBag className="h-12 w-12" />,
     }
 
     const getStrength = () => {
@@ -127,7 +139,8 @@ export default function IndustryMatchCard({
                         text-emerald-300
                     "
                 >
-                    🏆 Top Match
+                    <FiAward className="h-4 w-4" />
+                    <span>Top Match</span>
                 </div>
 
                 {/* Industry */}
@@ -137,7 +150,7 @@ export default function IndustryMatchCard({
                         {
                             industryIcons[
                             industry
-                            ] ?? '🚀'
+                            ] ?? <FiTrendingUp className="h-12 w-12" />
                         }
                     </div>
 

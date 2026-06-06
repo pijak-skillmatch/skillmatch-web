@@ -14,6 +14,8 @@ import {
   removeToken,
 } from '@/lib/auth/token'
 
+import { FiChevronLeft, FiMenu, FiX, FiUser} from 'react-icons/fi'
+
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Model', href: '/analysis' },
@@ -105,20 +107,8 @@ export default function Navbar() {
                   hover:text-white
                 "
               >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 13 13"
-                  fill="none"
-                >
-                  <path
-                    d="M8.5 2L3.5 6.5l5 4.5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <FiChevronLeft
+                size={14} />
 
                 {back.label}
               </button>
@@ -212,6 +202,8 @@ export default function Navbar() {
                 <>
                   <div
                     className="
+          flex items-center
+          gap-2
           rounded-xl
 
           border border-white/10
@@ -223,7 +215,8 @@ export default function Navbar() {
           text-white
         "
                   >
-                    👤 {user.name}
+                    <FiUser size={14} />
+                    {user.name}
                   </div>
 
                   <button
@@ -301,28 +294,11 @@ export default function Navbar() {
                 md:hidden
               "
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                {mobileOpen ? (
-                  <path
-                    d="M6 6L18 18M18 6L6 18"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                ) : (
-                  <path
-                    d="M4 7H20M4 12H20M4 17H20"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                )}
-              </svg>
+              {mobileOpen ? (
+                <FiX size={20} />
+              ) : (
+              <FiMenu size={20} />
+              )}
             </button>
           </div>
         </div>
@@ -379,7 +355,8 @@ export default function Navbar() {
                 <>
                   <div
                     className="
-        mt-2
+        flex items-center
+        gap-2 mt-2
 
         rounded-xl
 
@@ -392,7 +369,8 @@ export default function Navbar() {
         text-white
       "
                   >
-                    👤 {user.name}
+                    <FiUser size={14} />
+                    {user.name}
                   </div>
 
                   <button
