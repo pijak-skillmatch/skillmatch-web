@@ -191,10 +191,13 @@ export default function AnalysisForm() {
                 }
 
                 localStorage.setItem(
-                    'analysis_result',
-                    JSON.stringify(
-                        response
-                    )
+                    'selected_skills',
+                    JSON.stringify(selectedSkills)
+                )
+
+                localStorage.setItem(
+                    'experience_level',
+                    experience
                 )
 
                 router.push(
