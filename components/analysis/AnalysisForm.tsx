@@ -29,6 +29,14 @@ import {
     analyzeResume,
 } from '@/lib/api/resume'
 
+import {
+    showSuccess,
+    showError,
+    showWarning,
+    showLoading,
+    closeLoading,
+} from '@/lib/swal'
+
 const DEFAULT_EXPERIENCE =
     'Entry Level'
 
@@ -122,17 +130,18 @@ export default function AnalysisForm() {
     }
 
     const handleSkillsAnalysis =
-        async () => {
+        async (): Promise<boolean> => {
 
             if (
                 selectedSkills.length === 0
             ) {
 
-                alert(
-                    'Please select at least one skill.'
+                await showWarning(
+                    'No Skills Selected',
+                    'Please select at least one skill before continuing.'
                 )
 
-                return
+                return false
             }
 
             const response =
@@ -145,18 +154,21 @@ export default function AnalysisForm() {
             saveAnalysisResult(
                 response
             )
+
+            return true
         }
 
     const handleResumeAnalysis =
-        async () => {
+        async (): Promise<boolean> => {
 
             if (!resumeFile) {
 
-                alert(
-                    'Please upload a resume.'
+                await showWarning(
+                    'Resume Required',
+                    'Please upload your resume before running the analysis.'
                 )
 
-                return
+                return false
             }
 
             const response =
@@ -168,9 +180,10 @@ export default function AnalysisForm() {
             saveAnalysisResult(
                 response,
                 response.data
-                    ?.detected_skills ??
-                []
+                    ?.detected_skills ?? []
             )
+
+            return true
         }
 
     const handleAnalyze =
@@ -182,17 +195,38 @@ export default function AnalysisForm() {
                     true
                 )
 
+                showLoading(
+                    'Analyzing Profile',
+                    'SkillMatch AI is generating your career report...'
+                )
+
+                let success =
+                    false
+
                 if (
                     mode ===
                     'skills'
                 ) {
 
-                    await handleSkillsAnalysis()
+                    success =
+                        await handleSkillsAnalysis()
 
                 } else {
 
-                    await handleResumeAnalysis()
+                    success =
+                        await handleResumeAnalysis()
                 }
+
+                if (!success) {
+                    return
+                }
+
+                closeLoading()
+
+                await showSuccess(
+                    'Analysis Complete',
+                    'Your AI career report is ready.'
+                )
 
                 router.push(
                     '/dashboard'
@@ -200,12 +234,15 @@ export default function AnalysisForm() {
 
             } catch (error) {
 
+                closeLoading()
+
                 console.error(
                     error
                 )
 
-                alert(
-                    'Failed to analyze profile.'
+                await showError(
+                    'Analysis Failed',
+                    'Something went wrong while analyzing your profile.'
                 )
 
             } finally {

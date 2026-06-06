@@ -11,18 +11,27 @@ import Navbar from '@/components/layout/Navbar'
 import Button from '@/components/ui/Button'
 
 import SummaryCard from '@/components/dashboard/SummaryCard'
-import UserSkillsCard from '@/components/dashboard/UserSkillsCard'
-import SkillGapComparisonCard from '@/components/dashboard/SkillGapComparisonCard'
-import IndustryMatchCard from '@/components/dashboard/IndustryMatchCard'
-import IndustryProbabilityCard from '@/components/dashboard/IndustryProbabilityCard'
 import LearningPathCard from '@/components/dashboard/LearningPathCard'
 import RecommendedSkillsCard from '@/components/dashboard/RecommendedSkillsCard'
-import CareerInsightCard from
-    '@/components/dashboard/CareerInsightCard'
 
 import {
     AnalyzeResponse,
 } from '@/types/analysis'
+
+import DashboardActions from
+    '@/components/dashboard/DashboardActions'
+
+import DashboardHero from
+    '@/components/dashboard/DashboardHero'
+
+import CareerAnalysisSection from
+    '@/components/dashboard/sections/CareerAnalysisSection'
+
+import SkillAssessmentSection from
+    '@/components/dashboard/sections/SkillAssessmentSection'
+
+import LearningRecommendationSection from
+    '@/components/dashboard/sections/LearningRecommendationSection'
 
 export default function DashboardPage() {
 
@@ -158,102 +167,12 @@ export default function DashboardPage() {
                     />
 
                 </div>
-                <section
-                    className="
-        relative
-        overflow-hidden
 
-        rounded-4xl
-        border border-white/10
-
-        bg-white/5
-
-        p-10
-    "
-                >
-                    <div
-                        className="
-            absolute
-            inset-0
-
-            bg-linear-to-br
-            from-(--secondary)/10
-            to-(--primary)/10
-        "
-                    />
-
-                    <div className="relative z-10">
-
-                        <div
-                            className="
-                inline-flex
-                items-center
-                gap-2
-
-                rounded-full
-
-                border border-white/10
-                bg-white/5
-
-                px-4 py-2
-
-                text-sm
-                text-slate-300
-            "
-                        >
-                            🚀 AI Career Intelligence
-                        </div>
-
-                        <h1
-                            className="
-                mt-6
-
-                text-5xl
-                font-bold
-
-                tracking-tight
-
-                text-white
-            "
-                        >
-                            Your Career
-                            <span
-                                className="
-                    bg-linear-to-r
-                    from-(--secondary)
-                    to-(--primary)
-
-                    bg-clip-text
-                    text-transparent
-                "
-                            >
-                                {' '}Intelligence Report
-                            </span>
-                        </h1>
-
-                        <p
-                            className="
-                mt-5
-                max-w-3xl
-
-                text-lg
-                leading-8
-
-                text-slate-400
-            "
-                        >
-                            Discover your most suitable
-                            industry, identify skill gaps,
-                            and follow a personalized
-                            learning roadmap generated
-                            by SkillMatch AI.
-                        </p>
-
-                    </div>
-                </section>
 
                 {/* Dashboard */}
                 <div className="mt-10 space-y-12">
+
+                    <DashboardHero />
 
                     {/* SUMMARY */}
                     <SummaryCard
@@ -272,233 +191,36 @@ export default function DashboardPage() {
                     />
 
                     {/* CAREER ANALYSIS */}
-                    <section>
-
-                        <div className="mb-6">
-
-                            <h2
-                                className="
-                    text-sm
-                    font-semibold
-                    uppercase
-
-                    tracking-[0.2em]
-
-                    text-slate-500
-                "
-                            >
-                                Career Analysis
-                            </h2>
-
-                        </div>
-
-                        <div
-                            className="
-                grid
-                gap-8
-                lg:grid-cols-2
-                items-stretch
-            "
-                        >
-                            <div className="min-w-0">
-                                <IndustryMatchCard
-                                    industry={
-                                        topIndustry.industry
-                                    }
-                                    probability={
-                                        topIndustry.probability
-                                    }
-                                />
-                            </div>
-
-                            <div className="min-w-0">
-                                <IndustryProbabilityCard
-                                    industries={
-                                        result.data
-                                            .industry_predictions
-                                    }
-                                />
-                            </div>
-                        </div>
-
-                        <div className="mt-8">
-
-                            <CareerInsightCard
-                                industry={
-                                    topIndustry.industry
-                                }
-                                currentSkills={
-                                    userSkills
-                                }
-                                recommendedSkills={
-                                    recommendedSkillNames
-                                }
-                            />
-
-                        </div>
-
-                    </section>
+                    <CareerAnalysisSection
+                        industry={topIndustry.industry}
+                        probability={topIndustry.probability}
+                        industries={result.data.industry_predictions}
+                        currentSkills={userSkills}
+                        recommendedSkills={recommendedSkillNames}
+                    />
 
                     {/* SKILL ASSESSMENT */}
-                    <section>
-
-                        <div className="mb-6">
-
-                            <h2
-                                className="
-                    text-sm
-                    font-semibold
-                    uppercase
-
-                    tracking-[0.2em]
-
-                    text-slate-500
-                "
-                            >
-                                Skill Assessment
-                            </h2>
-
-                        </div>
-
-                        <div
-                            className="
-                grid
-                gap-8
-                lg:grid-cols-2
-            "
-                        >
-                            <UserSkillsCard
-                                skills={userSkills}
-                            />
-
-                            <SkillGapComparisonCard
-                                currentSkills={
-                                    userSkills
-                                }
-                                recommendedSkills={
-                                    recommendedSkillNames
-                                }
-                            />
-                        </div>
-
-                    </section>
+                    <SkillAssessmentSection
+                        currentSkills={userSkills}
+                        recommendedSkills={recommendedSkillNames}
+                    />
 
                     {/* LEARNING RECOMMENDATIONS */}
-                    <section>
-
-                        <div className="mb-6">
-
-                            <h2
-                                className="
-                text-sm
-                font-semibold
-                uppercase
-
-                tracking-[0.2em]
-
-                text-slate-500
-            "
-                            >
-                                Learning Recommendations
-                            </h2>
-
-                        </div>
-
-                        <div className="space-y-8">
-
-                            <LearningPathCard
-                                learningPath={
-                                    result.data
-                                        .learning_path
-                                }
-                            />
-
-                            <RecommendedSkillsCard
-                                skills={
-                                    result.data
-                                        .recommended_skills
-                                }
-                            />
-
-                        </div>
-
-                    </section>
+                    <LearningRecommendationSection
+                        learningPath={
+                            result.data
+                                .learning_path
+                        }
+                        skills={
+                            result.data
+                                .recommended_skills
+                        }
+                    />
 
                     {/* ACTIONS */}
                     <section>
 
-                        <div
-                            className="
-                rounded-3xl
-                border border-white/10
-
-                bg-white/5
-
-                p-8
-            "
-                        >
-                            <h2
-                                className="
-                    text-2xl
-                    font-bold
-
-                    text-white
-                "
-                            >
-                                Continue Your Journey
-                            </h2>
-
-                            <p
-                                className="
-                    mt-3
-
-                    max-w-2xl
-
-                    text-slate-400
-                "
-                            >
-                                Review your recommendations,
-                                export your report, or perform
-                                another analysis with different
-                                skills and experience levels.
-                            </p>
-
-                            <div
-                                className="
-                    mt-8
-
-                    flex
-                    flex-wrap
-
-                    gap-4
-                "
-                            >
-                                <Button
-                                    onClick={() => {
-
-                                        localStorage.removeItem(
-                                            'analysis_result'
-                                        )
-
-                                        localStorage.removeItem(
-                                            'selected_skills'
-                                        )
-
-                                        router.push(
-                                            '/analysis'
-                                        )
-                                    }}
-                                >
-                                    New Analysis
-                                </Button>
-
-                                <Button
-                                    variant="secondary"
-                                >
-                                    Export PDF
-                                </Button>
-                            </div>
-                        </div>
+                        <DashboardActions />
 
                     </section>
 
