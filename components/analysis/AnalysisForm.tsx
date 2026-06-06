@@ -1,18 +1,25 @@
 'use client'
 
 import {
-    useEffect,
     useState,
 } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import Button from '@/components/ui/Button'
 import GlassPanel from '@/components/ui/GlassPanel'
-import SkillChip from '@/components/ui/SkillChip'
 
 import AIThinking from './AIThinking'
 import ResumeUpload from './ResumeUpload'
+
+import AnalysisHeader from './AnalysisHeader'
+import AnalysisModeSwitch from './AnalysisModeSwitch'
+import ExperienceSelector from './ExperienceSelector'
+import SkillsSelector from './SkillsSelector'
+import AnalysisSubmit from './AnalysisSubmit'
+
+import {
+    useAnalysis,
+} from '@/hooks/useAnalysis'
 
 import {
     analyzeProfile,
@@ -22,23 +29,18 @@ import {
     analyzeResume,
 } from '@/lib/api/resume'
 
-import {
-    getSkills,
-} from '@/lib/api/skill'
-
-import {
-    SkillsResponse,
-} from '@/types/skill'
-
-const experienceLevels = [
-    'Entry Level',
-    'Mid Level',
-    'Senior Level',
-]
+const DEFAULT_EXPERIENCE =
+    'Entry Level'
 
 export default function AnalysisForm() {
 
-    const router = useRouter()
+    const router =
+        useRouter()
+
+    const {
+        availableSkills,
+        isLoadingSkills,
+    } = useAnalysis()
 
     const [mode,
         setMode] =
@@ -46,10 +48,6 @@ export default function AnalysisForm() {
             'skills' |
             'resume'
         >('skills')
-
-    const [availableSkills,
-        setAvailableSkills] =
-        useState<string[]>([])
 
     const [selectedSkills,
         setSelectedSkills] =
@@ -64,49 +62,12 @@ export default function AnalysisForm() {
     const [experience,
         setExperience] =
         useState(
-            'Entry Level'
+            DEFAULT_EXPERIENCE
         )
-
-    const [isLoadingSkills,
-        setIsLoadingSkills] =
-        useState(true)
 
     const [isAnalyzing,
         setIsAnalyzing] =
         useState(false)
-
-    useEffect(() => {
-
-        const loadSkills =
-            async () => {
-
-                try {
-
-                    const response:
-                        SkillsResponse =
-                        await getSkills()
-
-                    setAvailableSkills(
-                        response.data
-                    )
-
-                } catch (error) {
-
-                    console.error(
-                        error
-                    )
-
-                } finally {
-
-                    setIsLoadingSkills(
-                        false
-                    )
-                }
-            }
-
-        loadSkills()
-
-    }, [])
 
     const toggleSkill = (
         skill: string
@@ -125,14 +86,92 @@ export default function AnalysisForm() {
                 )
             )
 
-        } else {
-
-            setSelectedSkills([
-                ...selectedSkills,
-                skill,
-            ])
+            return
         }
+
+        setSelectedSkills([
+            ...selectedSkills,
+            skill,
+        ])
     }
+
+    const saveAnalysisResult = (
+        response: unknown,
+        detectedSkills?: string[]
+    ) => {
+
+        localStorage.setItem(
+            'analysis_result',
+            JSON.stringify(
+                response
+            )
+        )
+
+        localStorage.setItem(
+            'selected_skills',
+            JSON.stringify(
+                detectedSkills ??
+                selectedSkills
+            )
+        )
+
+        localStorage.setItem(
+            'experience_level',
+            experience
+        )
+    }
+
+    const handleSkillsAnalysis =
+        async () => {
+
+            if (
+                selectedSkills.length === 0
+            ) {
+
+                alert(
+                    'Please select at least one skill.'
+                )
+
+                return
+            }
+
+            const response =
+                await analyzeProfile({
+                    skills:
+                        selectedSkills,
+                    experience,
+                })
+
+            saveAnalysisResult(
+                response
+            )
+        }
+
+    const handleResumeAnalysis =
+        async () => {
+
+            if (!resumeFile) {
+
+                alert(
+                    'Please upload a resume.'
+                )
+
+                return
+            }
+
+            const response =
+                await analyzeResume(
+                    resumeFile,
+                    experience
+                )
+
+            saveAnalysisResult(
+                response,
+                response.data
+                    ?.detected_skills ??
+                []
+            )
+        }
 
     const handleAnalyze =
         async () => {
@@ -143,62 +182,17 @@ export default function AnalysisForm() {
                     true
                 )
 
-                let response
-
                 if (
                     mode ===
                     'skills'
                 ) {
 
-                    if (
-                        selectedSkills.length === 0
-                    ) {
-
-                        alert(
-                            'Please select at least one skill.'
-                        )
-
-                        return
-                    }
-
-                    response =
-                        await analyzeProfile(
-                            {
-                                skills:
-                                    selectedSkills,
-                                experience,
-                            }
-                        )
+                    await handleSkillsAnalysis()
 
                 } else {
 
-                    if (
-                        !resumeFile
-                    ) {
-
-                        alert(
-                            'Please upload a resume.'
-                        )
-
-                        return
-                    }
-
-                    response =
-                        await analyzeResume(
-                            resumeFile,
-                            experience
-                        )
+                    await handleResumeAnalysis()
                 }
-
-                localStorage.setItem(
-                    'selected_skills',
-                    JSON.stringify(selectedSkills)
-                )
-
-                localStorage.setItem(
-                    'experience_level',
-                    experience
-                )
 
                 router.push(
                     '/dashboard'
@@ -235,310 +229,62 @@ export default function AnalysisForm() {
 
         <GlassPanel className="p-6 md:p-8">
 
-            {/* Header */}
+            <AnalysisHeader />
 
-            <div>
-
-                <div
-                    className="
-                        inline-flex
-                        items-center
-                        gap-2
-                        rounded-full
-                        border border-white/10
-                        bg-white/5
-                        px-4 py-2
-                        text-xs
-                        font-semibold
-                        uppercase
-                        tracking-[0.18em]
-                        text-slate-300
-                    "
-                >
-                    Analysis Form
-                </div>
-
-                <h2
-                    className="
-                        mt-5
-                        text-3xl
-                        font-bold
-                        tracking-tight
-                        text-white
-                    "
-                >
-                    Build Your AI Profile
-                </h2>
-
-                <p
-                    className="
-                        mt-3
-                        leading-7
-                        text-slate-400
-                    "
-                >
-                    Analyze your skills
-                    manually or upload
-                    your resume to
-                    discover career
-                    opportunities and
-                    learning paths.
-                </p>
-
-            </div>
-
-            {/* Mode Switch */}
-
-            <div className="mt-8 flex gap-3">
-
-                <button
-                    type="button"
-                    onClick={() =>
-                        setMode(
-                            'skills'
-                        )
-                    }
-                    className={`
-                        rounded-xl
-                        px-5 py-3
-                        text-sm
-                        font-medium
-
-                        ${mode === 'skills'
-                            ? `
-                            bg-linear-to-r
-                            from-(--secondary)
-                            to-(--primary)
-                            text-white
-                            `
-                            : `
-                            border border-white/10
-                            bg-white/5
-                            text-slate-300
-                            `
-                        }
-                    `}
-                >
-                    Skills Analysis
-                </button>
-
-                <button
-                    type="button"
-                    onClick={() =>
-                        setMode(
-                            'resume'
-                        )
-                    }
-                    className={`
-                        rounded-xl
-                        px-5 py-3
-                        text-sm
-                        font-medium
-
-                        ${mode === 'resume'
-                            ? `
-                            bg-linear-to-r
-                            from-(--secondary)
-                            to-(--primary)
-                            text-white
-                            `
-                            : `
-                            border border-white/10
-                            bg-white/5
-                            text-slate-300
-                            `
-                        }
-                    `}
-                >
-                    Resume Analysis
-                </button>
-
-            </div>
+            <AnalysisModeSwitch
+                mode={mode}
+                onChange={setMode}
+            />
 
             <div className="mt-10 space-y-8">
 
-                {/* Experience */}
+                <ExperienceSelector
+                    experience={
+                        experience
+                    }
+                    onChange={
+                        setExperience
+                    }
+                />
 
-                <div>
-
-                    <label
-                        className="
-                            mb-3 block
-                            text-sm
-                            font-medium
-                            text-slate-300
-                        "
-                    >
-                        Experience Level
-                    </label>
-
-                    <div className="flex flex-wrap gap-3">
-
-                        {experienceLevels.map(
-                            (level) => {
-
-                                const active =
-                                    experience ===
-                                    level
-
-                                return (
-                                    <button
-                                        key={level}
-                                        type="button"
-                                        onClick={() =>
-                                            setExperience(
-                                                level
-                                            )
-                                        }
-                                        className={`
-                                            rounded-xl
-                                            border
-                                            px-5 py-3
-                                            text-sm
-                                            font-medium
-
-                                            ${active
-                                                ? `
-                                                border-transparent
-                                                bg-linear-to-r
-                                                from-(--secondary)
-                                                to-(--primary)
-                                                text-white
-                                                `
-                                                : `
-                                                border-white/10
-                                                bg-white/5
-                                                text-slate-300
-                                                `
-                                            }
-                                        `}
-                                    >
-                                        {level}
-                                    </button>
-                                )
+                {mode ===
+                    'skills'
+                    ? (
+                        <SkillsSelector
+                            availableSkills={
+                                availableSkills
                             }
-                        )}
+                            selectedSkills={
+                                selectedSkills
+                            }
+                            isLoading={
+                                isLoadingSkills
+                            }
+                            onToggleSkill={
+                                toggleSkill
+                            }
+                        />
+                    )
+                    : (
+                        <ResumeUpload
+                            file={
+                                resumeFile
+                            }
+                            onFileChange={
+                                setResumeFile
+                            }
+                        />
+                    )}
 
-                    </div>
-
-                </div>
-
-                {/* Dynamic Content */}
-
-                {mode === 'skills' ? (
-
-                    <div>
-
-                        <div className="flex items-center justify-between">
-
-                            <label
-                                className="
-                                    text-sm
-                                    font-medium
-                                    text-slate-300
-                                "
-                            >
-                                Select Your Skills
-                            </label>
-
-                            <span className="text-xs text-slate-500">
-                                {
-                                    selectedSkills.length
-                                } selected
-                            </span>
-
-                        </div>
-
-                        <div className="mt-4 flex flex-wrap gap-3">
-
-                            {isLoadingSkills ? (
-
-                                <p className="text-slate-400">
-                                    Loading skills...
-                                </p>
-
-                            ) : (
-
-                                availableSkills.map(
-                                    (
-                                        skill
-                                    ) => (
-
-                                        <SkillChip
-                                            key={
-                                                skill
-                                            }
-                                            label={
-                                                skill
-                                            }
-                                            active={selectedSkills.includes(
-                                                skill
-                                            )}
-                                            onClick={() =>
-                                                toggleSkill(
-                                                    skill
-                                                )
-                                            }
-                                        />
-
-                                    )
-                                )
-
-                            )}
-
-                        </div>
-
-                    </div>
-
-                ) : (
-
-                    <ResumeUpload
-                        file={
-                            resumeFile
-                        }
-                        onFileChange={
-                            setResumeFile
-                        }
-                    />
-
-                )}
-
-                {/* Submit */}
-
-                <div className="pt-4">
-
-                    <Button
-                        onClick={
-                            handleAnalyze
-                        }
-                        disabled={
-                            isAnalyzing
-                        }
-                        className="
-                            w-full
-                            py-4
-                            text-base
-                        "
-                    >
-                        {mode ===
-                            'skills'
-                            ? 'Analyze Skills'
-                            : 'Analyze Resume'}
-                    </Button>
-
-                    <p
-                        className="
-                            mt-4
-                            text-center
-                            text-sm
-                            text-slate-500
-                        "
-                    >
-                        AI analysis usually
-                        takes a few seconds.
-                    </p>
-
-                </div>
+                <AnalysisSubmit
+                    mode={mode}
+                    isAnalyzing={
+                        isAnalyzing
+                    }
+                    onAnalyze={
+                        handleAnalyze
+                    }
+                />
 
             </div>
 
