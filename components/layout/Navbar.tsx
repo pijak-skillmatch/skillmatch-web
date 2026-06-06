@@ -2,8 +2,17 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
+
+import {
+  getUser,
+  removeUser,
+} from '@/lib/auth/user'
+
+import {
+  removeToken,
+} from '@/lib/auth/token'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -18,12 +27,44 @@ const backMap: Record<string, { href: string; label: string }> = {
 }
 
 export default function Navbar() {
+
+  const [user, setUser] =
+    useState<{
+      id: number
+      name: string
+      email: string
+    } | null>(null)
+
   const pathname = usePathname()
   const router = useRouter()
 
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const back = backMap[pathname]
+
+  useEffect(() => {
+
+    const currentUser =
+      getUser()
+
+    setUser(
+      currentUser
+    )
+
+  }, [])
+
+  const handleLogout =
+    () => {
+
+      removeToken()
+
+      removeUser()
+
+      setUser(null)
+
+      router.push('/')
+
+    }
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -157,31 +198,88 @@ export default function Navbar() {
             </div>
 
             {/* Desktop CTA */}
-            <Link
-              href="/analysis"
+            <div
               className="
-                hidden md:inline-flex
-
-                rounded-xl
-
-                bg-linear-to-r
-                from-(--secondary)
-                to-(--primary)
-
-                px-5 py-2.5
-
-                text-sm font-medium text-white
-
-                shadow-[0_0_30px_rgba(124,156,255,0.25)]
-
-                transition-all duration-300
-
-                hover:scale-[1.03]
-                hover:shadow-[0_0_40px_rgba(124,156,255,0.45)]
-              "
+    hidden
+    items-center
+    gap-3
+    md:flex
+  "
             >
-              Get Started
-            </Link>
+
+              {user ? (
+
+                <>
+                  <div
+                    className="
+          rounded-xl
+
+          border border-white/10
+          bg-white/5
+
+          px-4 py-2
+
+          text-sm
+          text-white
+        "
+                  >
+                    👤 {user.name}
+                  </div>
+
+                  <button
+                    onClick={handleLogout}
+                    className="
+          rounded-xl
+
+          border border-red-500/20
+          bg-red-500/10
+
+          px-4 py-2
+
+          text-sm
+          text-red-300
+        "
+                  >
+                    Logout
+                  </button>
+                </>
+
+              ) : (
+
+                <>
+                  <Link
+                    href="/login"
+                    className="
+          text-sm
+          text-slate-300
+        "
+                  >
+                    Login
+                  </Link>
+
+                  <Link
+                    href="/register"
+                    className="
+          rounded-xl
+
+          bg-linear-to-r
+          from-(--secondary)
+          to-(--primary)
+
+          px-5 py-2.5
+
+          text-sm
+          font-medium
+          text-white
+        "
+                  >
+                    Register
+                  </Link>
+                </>
+
+              )}
+
+            </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -275,6 +373,91 @@ export default function Navbar() {
                   </Link>
                 )
               })}
+
+              {user ? (
+
+                <>
+                  <div
+                    className="
+        mt-2
+
+        rounded-xl
+
+        border border-white/10
+        bg-white/5
+
+        px-4 py-3
+
+        text-sm
+        text-white
+      "
+                  >
+                    👤 {user.name}
+                  </div>
+
+                  <button
+                    onClick={handleLogout}
+                    className="
+        mt-2
+
+        rounded-xl
+
+        border border-red-500/20
+        bg-red-500/10
+
+        px-4 py-3
+
+        text-left
+
+        text-sm
+        text-red-300
+      "
+                  >
+                    Logout
+                  </button>
+                </>
+
+              ) : (
+
+                <>
+                  <Link
+                    href="/login"
+                    className="
+        rounded-xl
+        px-4 py-3
+
+        text-sm
+        text-slate-300
+      "
+                  >
+                    Login
+                  </Link>
+
+                  <Link
+                    href="/register"
+                    className="
+        mt-2
+
+        flex
+        justify-center
+
+        rounded-xl
+
+        bg-linear-to-r
+        from-(--secondary)
+        to-(--primary)
+
+        px-5 py-3
+
+        text-sm
+        text-white
+      "
+                  >
+                    Register
+                  </Link>
+                </>
+
+              )}
 
               <Link
                 href="/analysis"
