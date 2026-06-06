@@ -41,24 +41,23 @@ export default function
             >
                 {skills.map(
                     (skill) => (
-                        <span
-                            key={
-                                skill.skill
-                            }
+                        <div
+                            key={skill.skill}
                             className="
-                                rounded-full
-                                border
-                                border-white/10
-                                bg-white/5
-                                px-4
-                                py-2
-                                text-slate-300
-                            "
+                                        rounded-2xl
+                                        border border-white/10
+                                        bg-white/5
+                                        p-4
+                                    "
                         >
-                            {
-                                skill.skill
-                            }
-                        </span>
+                            <p className="font-medium text-white">
+                                {skill.skill}
+                            </p>
+
+                            <p className="mt-1 text-sm text-slate-400">
+                                Score: {skill.score.toFixed(2)}
+                            </p>
+                        </div>
                     )
                 )}
             </div>
