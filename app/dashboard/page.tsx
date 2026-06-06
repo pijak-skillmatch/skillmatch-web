@@ -474,11 +474,20 @@ export default function DashboardPage() {
                 "
                             >
                                 <Button
-                                    onClick={() =>
+                                    onClick={() => {
+
+                                        localStorage.removeItem(
+                                            'analysis_result'
+                                        )
+
+                                        localStorage.removeItem(
+                                            'selected_skills'
+                                        )
+
                                         router.push(
                                             '/analysis'
                                         )
-                                    }
+                                    }}
                                 >
                                     New Analysis
                                 </Button>

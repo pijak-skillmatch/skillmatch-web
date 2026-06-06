@@ -1,8 +1,21 @@
+'use client'
+
+import { useEffect } from 'react'
+
 import Navbar from '@/components/layout/Navbar'
 
 import AnalysisForm from '@/components/analysis/AnalysisForm'
 
 export default function AnalysisPage() {
+
+    useEffect(() => {
+
+        localStorage.removeItem(
+            'analysis_result'
+        )
+
+    }, [])
+
     return (
         <>
             <Navbar />
