@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react'
+import type { IconType } from 'react-icons'
 
 interface FeatureCardProps {
-  icon: ReactNode
+  icon: IconType
   title: string
   description: string
 }
@@ -11,6 +11,7 @@ export default function FeatureCard({
   title,
   description,
 }: FeatureCardProps) {
+  const Icon = icon
   return (
     <div
       className="
@@ -63,7 +64,7 @@ export default function FeatureCard({
           shadow-[0_0_30px_rgba(124,156,255,0.12)]
         "
       >
-        {icon}
+        <Icon className="h-7 w-7" />
       </div>
 
       {/* Content */}

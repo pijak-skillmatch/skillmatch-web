@@ -4,7 +4,7 @@
 // Backend integration should replace these with real API calls.
 // ---------------------------------------------------------------------------
 
-import type { ReactNode } from 'react'
+import type { IconType } from 'react-icons'
 import {
   FiArrowUpRight,
   FiCpu,
@@ -15,37 +15,37 @@ import {
 } from 'react-icons/fi'
 
 export const features: {
-  icon: ReactNode;
+  icon: IconType;
   title: string;
   description: string;
 }[] = [
   {
-    icon: <FiCpu />,
+    icon: FiCpu,
     title: "AI Skill Profiling",
     description: "Analyze your skills and interests using intelligent profiling powered by machine learning.",
   },
   {
-    icon: <FiStar />,
+    icon: FiStar,
     title: "Personalized Career Match",
     description: "Receive career recommendations tailored specifically to your strengths and goals.",
   },
   {
-    icon: <FiTrendingUp />,
+    icon: FiTrendingUp,
     title: "Growth Roadmap",
     description: "Discover which skills to improve next and build a clearer roadmap for your future.",
   },
   {
-    icon: <FiZap />,
+    icon: FiZap,
     title: "Fast Recommendations",
     description: "Generate intelligent career insights in seconds through an intuitive guided flow.",
   },
   {
-    icon: <FiSearch />,
+    icon: FiSearch,
     title: "Deep Skill Analysis",
     description: "Understand how your abilities align with modern industry demands and opportunities.",
   },
   {
-    icon: <FiArrowUpRight />,
+    icon: FiArrowUpRight,
     title: "Future-Oriented Insights",
     description: "Explore emerging career paths and technologies relevant to your evolving potential.",
   },

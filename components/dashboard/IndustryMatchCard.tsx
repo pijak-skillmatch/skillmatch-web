@@ -1,10 +1,11 @@
+import type { ReactNode } from 'react'
 import {
     FiAward,
     FiBarChart2,
     FiBookOpen,
     FiCpu,
     FiDollarSign,
-    FiHeartPulse,
+    FiHeart,
     FiPackage,
     FiShoppingBag,
     FiTrendingUp,
@@ -28,10 +29,10 @@ export default function IndustryMatchCard({
         )
 
     const industryIcons:
-        Record<string, JSX.Element> = {
+        Record<string, ReactNode> = {
         Software: <FiCpu className="h-12 w-12" />,
         Finance: <FiDollarSign className="h-12 w-12" />,
-        Healthcare: <FiHeartPulse className="h-12 w-12" />,
+        Healthcare: <FiHeart className="h-12 w-12" />,
         Education: <FiBookOpen className="h-12 w-12" />,
         Marketing: <FiBarChart2 className="h-12 w-12" />,
         Manufacturing: <FiPackage className="h-12 w-12" />,
