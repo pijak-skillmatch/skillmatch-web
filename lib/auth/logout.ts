@@ -1,14 +1,17 @@
 import { removeToken } from "./token";
+
 import { removeUser } from "./user";
+
+import { removeStorageItem } from "./storage";
 
 export function logout() {
   removeToken();
 
   removeUser();
 
-  localStorage.removeItem("analysis_result");
+  removeStorageItem("analysis_result");
 
-  localStorage.removeItem("selected_skills");
+  removeStorageItem("selected_skills");
 
-  localStorage.removeItem("experience_level");
+  removeStorageItem("experience_level");
 }

@@ -1,13 +1,15 @@
-export const TOKEN_KEY = "access_token";
+import { getStorageItem, setStorageItem, removeStorageItem } from "./storage";
+
+const TOKEN_KEY = "access_token";
 
 export function saveToken(token: string) {
-  localStorage.setItem(TOKEN_KEY, token);
+  setStorageItem(TOKEN_KEY, token);
 }
 
 export function getToken() {
-  return localStorage.getItem(TOKEN_KEY);
+  return getStorageItem(TOKEN_KEY);
 }
 
 export function removeToken() {
-  localStorage.removeItem(TOKEN_KEY);
+  removeStorageItem(TOKEN_KEY);
 }
