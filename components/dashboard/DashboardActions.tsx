@@ -16,7 +16,12 @@ import {
     showError,
     showSuccess,
 } from '@/lib/swal'
+
 import Swal from 'sweetalert2'
+
+import {
+    setPendingAction,
+} from '@/lib/auth/pendingAction'
 
 export default function DashboardActions() {
 
@@ -48,29 +53,69 @@ export default function DashboardActions() {
 
                 const result =
                     await Swal.fire({
+
                         icon: 'warning',
+
                         title:
-                            'Login Required',
+                            'Account Required',
+
                         text:
-                            'Please login first to export your report as PDF.',
+                            'Login or create an account to export your report and save it to history.',
+
+                        showDenyButton: true,
+
+                        showCancelButton: true,
+
                         confirmButtonText:
                             'Login',
-                        showCancelButton: true,
+
+                        denyButtonText:
+                            'Register',
+
+                        cancelButtonText:
+                            'Cancel',
+
                         background:
                             '#0F172A',
+
                         color:
                             '#FFFFFF',
+
                         confirmButtonColor:
                             '#7C9CFF',
+
+                        denyButtonColor:
+                            '#8B5CF6',
                     })
 
                 if (
                     result.isConfirmed
                 ) {
 
+                    setPendingAction(
+                        'export_pdf'
+                    )
+
                     router.push(
                         '/login'
                     )
+
+                    return
+                }
+
+                if (
+                    result.isDenied
+                ) {
+
+                    setPendingAction(
+                        'export_pdf'
+                    )
+
+                    router.push(
+                        '/register'
+                    )
+
+                    return
                 }
 
                 return
@@ -88,9 +133,7 @@ export default function DashboardActions() {
                         'selected_skills'
                     )
 
-                if (
-                    !result
-                ) {
+                if (!result) {
 
                     await showError(
                         'Export Failed',

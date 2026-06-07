@@ -5,7 +5,9 @@ import {
     useState,
 } from 'react'
 
-import { useRouter } from 'next/navigation'
+import {
+    useRouter,
+} from 'next/navigation'
 
 import Navbar from '@/components/layout/Navbar'
 import Button from '@/components/ui/Button'
@@ -31,9 +33,38 @@ import SkillAssessmentSection from
 import LearningRecommendationSection from
     '@/components/dashboard/sections/LearningRecommendationSection'
 
+import PendingExportOverlay from
+    '@/components/dashboard/PendingExportOverlay'
+
+import {
+    getPendingAction,
+    clearPendingAction,
+} from '@/lib/auth/pendingAction'
+
+import {
+    isAuthenticated,
+} from '@/lib/auth/isAuthenticated'
+
+import {
+    saveHistory,
+} from '@/lib/api/history'
+
+import {
+    exportDashboardPdf,
+} from '@/lib/pdf/exportDashboardPdf'
+
+import {
+    showError,
+} from '@/lib/swal'
+
 export default function DashboardPage() {
 
     const router = useRouter()
+
+    const [
+        isAutoExporting,
+        setIsAutoExporting,
+    ] = useState(false)
 
     const [result, setResult] =
         useState<AnalyzeResponse | null>(
@@ -69,10 +100,148 @@ export default function DashboardPage() {
 
     }, [])
 
+    useEffect(() => {
+
+        const runPendingExport =
+            async () => {
+
+                if (!result) {
+                    return
+                }
+
+                const shouldExport =
+                    new URLSearchParams(
+                        window.location.search
+                    ).get(
+                        'export'
+                    )
+
+                const pendingAction =
+                    getPendingAction()
+
+                if (
+                    shouldExport !== '1'
+                ) {
+                    return
+                }
+
+                if (
+                    pendingAction !==
+                    'export_pdf'
+                ) {
+                    return
+                }
+
+                if (
+                    !isAuthenticated()
+                ) {
+                    return
+                }
+
+                try {
+
+                    setIsAutoExporting(
+                        true
+                    )
+
+                    const topIndustry =
+                        result.data
+                            .industry_predictions[0]
+
+                    const analysisType =
+                        localStorage.getItem(
+                            'analysis_mode'
+                        ) ?? 'skills'
+
+                    await saveHistory({
+
+                        analysis_type:
+                            analysisType,
+
+                        industry:
+                            topIndustry.industry,
+
+                        confidence:
+                            topIndustry.probability,
+
+                        input_skills:
+                            userSkills,
+
+                        result_json:
+                            result.data,
+                    })
+
+                    exportDashboardPdf({
+
+                        industry:
+                            topIndustry.industry,
+
+                        confidence:
+                            topIndustry.probability,
+
+                        inputSkills:
+                            userSkills,
+
+                        resultJson:
+                            result.data,
+                    })
+
+
+                    await new Promise(
+                        resolve =>
+                            setTimeout(
+                                resolve,
+                                1000
+                            )
+                    )
+
+                    clearPendingAction()
+
+                    setIsAutoExporting(
+                        false
+                    )
+
+                    router.replace(
+                        '/dashboard'
+                    )
+
+                } catch (
+                error
+                ) {
+
+                    setIsAutoExporting(
+                        false
+                    )
+
+                    console.error(
+                        error
+                    )
+
+                    await showError(
+                        'Export Failed',
+                        'Unable to complete automatic export.'
+                    )
+                }
+            }
+
+        runPendingExport()
+
+    }, [
+        result,
+        userSkills,
+        router,
+    ])
+
     if (!result) {
         return (
             <>
                 <Navbar />
+
+                {
+                    isAutoExporting && (
+                        <PendingExportOverlay />
+                    )
+                }
 
                 <main className="container-custom pt-32">
                     <h1 className="text-3xl font-bold text-white">

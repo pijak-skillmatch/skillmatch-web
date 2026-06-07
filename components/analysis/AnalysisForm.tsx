@@ -113,6 +113,9 @@ export default function AnalysisForm() {
 
     const saveAnalysisResult = (
         response: unknown,
+        analysisMode:
+            'skills' |
+            'resume',
         detectedSkills?: string[]
     ) => {
 
@@ -134,6 +137,11 @@ export default function AnalysisForm() {
         localStorage.setItem(
             'experience_level',
             experience
+        )
+
+        localStorage.setItem(
+            'analysis_mode',
+            analysisMode
         )
     }
 
@@ -216,7 +224,8 @@ export default function AnalysisForm() {
                 })
 
             saveAnalysisResult(
-                response
+                response,
+                'skills'
             )
 
             await saveHistoryIfLoggedIn(
@@ -253,6 +262,7 @@ export default function AnalysisForm() {
 
             saveAnalysisResult(
                 response,
+                'resume',
                 detectedSkills
             )
 

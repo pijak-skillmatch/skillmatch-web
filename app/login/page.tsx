@@ -26,6 +26,7 @@ import {
     showLoading,
     closeLoading,
 } from '@/lib/swal'
+import { getPendingAction } from '@/lib/auth/pendingAction'
 
 export default function LoginPage() {
 
@@ -80,9 +81,22 @@ export default function LoginPage() {
                     `Welcome back, ${user.name}!`
                 )
 
-                router.push(
-                    '/'
-                )
+                const pendingAction =
+                    getPendingAction()
+
+                if (
+                    pendingAction ===
+                    'export_pdf'
+                ) {
+
+                    router.push(
+                        '/dashboard?export=1'
+                    )
+
+                    return
+                }
+
+                router.push('/')
 
             } catch (error) {
 

@@ -14,4 +14,6 @@ export function logout() {
   removeStorageItem("selected_skills");
 
   removeStorageItem("experience_level");
+
+  removeStorageItem("analysis_mode");
 }
