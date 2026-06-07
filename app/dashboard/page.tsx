@@ -11,8 +11,6 @@ import Navbar from '@/components/layout/Navbar'
 import Button from '@/components/ui/Button'
 
 import SummaryCard from '@/components/dashboard/SummaryCard'
-import LearningPathCard from '@/components/dashboard/LearningPathCard'
-import RecommendedSkillsCard from '@/components/dashboard/RecommendedSkillsCard'
 
 import {
     AnalyzeResponse,

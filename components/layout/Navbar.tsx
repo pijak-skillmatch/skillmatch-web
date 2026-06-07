@@ -14,7 +14,9 @@ import {
   removeToken,
 } from '@/lib/auth/token'
 
-import { FiChevronLeft, FiMenu, FiX, FiUser} from 'react-icons/fi'
+import { FiChevronLeft, FiMenu, FiX, FiUser } from 'react-icons/fi'
+import { showConfirm, showSuccess } from '@/lib/swal'
+import { logout } from '@/lib/auth/logout'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -55,18 +57,27 @@ export default function Navbar() {
 
   }, [])
 
-  const handleLogout =
-    () => {
+  const handleLogout = async () => {
 
-      removeToken()
+    const result =
+      await showConfirm(
+        'Logout',
+        'Are you sure you want to logout?'
+      )
 
-      removeUser()
-
-      setUser(null)
-
-      router.push('/')
-
+    if (!result.isConfirmed) {
+      return
     }
+
+    logout()
+
+    await showSuccess(
+      'Logged Out',
+      'See you again soon!'
+    )
+
+    router.push('/')
+  }
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -108,7 +119,7 @@ export default function Navbar() {
                 "
               >
                 <FiChevronLeft
-                size={14} />
+                  size={14} />
 
                 {back.label}
               </button>
@@ -297,7 +308,7 @@ export default function Navbar() {
               {mobileOpen ? (
                 <FiX size={20} />
               ) : (
-              <FiMenu size={20} />
+                <FiMenu size={20} />
               )}
             </button>
           </div>
