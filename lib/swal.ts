@@ -62,3 +62,19 @@ export const showLoading = (title: string, text?: string) => {
 export const closeLoading = () => {
   Swal.close();
 };
+
+export function showLoginRequired(title: string, text: string) {
+  return Swal.fire({
+    icon: "warning",
+
+    title,
+
+    text,
+
+    showCancelButton: true,
+
+    confirmButtonText: "Sign In",
+
+    cancelButtonText: "Cancel",
+  });
+}

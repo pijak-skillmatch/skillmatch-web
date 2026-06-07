@@ -1,13 +1,15 @@
 import { User } from "@/types/auth";
 
+import { getStorageItem, setStorageItem, removeStorageItem } from "./storage";
+
 const USER_KEY = "current_user";
 
 export function saveUser(user: User) {
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
+  setStorageItem(USER_KEY, JSON.stringify(user));
 }
 
-export function getUser() {
-  const data = localStorage.getItem(USER_KEY);
+export function getUser(): User | null {
+  const data = getStorageItem(USER_KEY);
 
   if (!data) {
     return null;
@@ -17,5 +19,5 @@ export function getUser() {
 }
 
 export function removeUser() {
-  localStorage.removeItem(USER_KEY);
+  removeStorageItem(USER_KEY);
 }

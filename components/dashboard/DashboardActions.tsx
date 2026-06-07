@@ -2,13 +2,21 @@
 
 import { useRouter } from 'next/navigation'
 
-import Swal from 'sweetalert2'
-
 import Button from '@/components/ui/Button'
 
 import {
     getToken,
 } from '@/lib/auth/token'
+
+import {
+    exportDashboardPdf,
+} from '@/lib/pdf/exportDashboardPdf'
+
+import {
+    showError,
+    showSuccess,
+} from '@/lib/swal'
+import Swal from 'sweetalert2'
 
 export default function DashboardActions() {
 
@@ -31,60 +39,113 @@ export default function DashboardActions() {
         }
 
     const handleExport =
-        () => {
+        async () => {
 
             const token =
                 getToken()
 
             if (!token) {
 
-                Swal.fire({
-                    icon: 'warning',
-                    title:
-                        'Login Required',
-                    text:
-                        'Please login first to export your report as PDF.',
-                    confirmButtonText:
-                        'Login',
-                    showCancelButton: true,
-                    cancelButtonText:
-                        'Cancel',
-                    background:
-                        '#0F172A',
-                    color:
-                        '#FFFFFF',
-                    confirmButtonColor:
-                        '#7C9CFF',
-                }).then(
-                    (result) => {
+                const result =
+                    await Swal.fire({
+                        icon: 'warning',
+                        title:
+                            'Login Required',
+                        text:
+                            'Please login first to export your report as PDF.',
+                        confirmButtonText:
+                            'Login',
+                        showCancelButton: true,
+                        background:
+                            '#0F172A',
+                        color:
+                            '#FFFFFF',
+                        confirmButtonColor:
+                            '#7C9CFF',
+                    })
 
-                        if (
-                            result.isConfirmed
-                        ) {
+                if (
+                    result.isConfirmed
+                ) {
 
-                            router.push(
-                                '/login'
-                            )
-                        }
-                    }
-                )
+                    router.push(
+                        '/login'
+                    )
+                }
 
                 return
             }
 
-            Swal.fire({
-                icon: 'info',
-                title:
-                    'Coming Soon',
-                text:
-                    'PDF export feature is currently under development.',
-                background:
-                    '#0F172A',
-                color:
-                    '#FFFFFF',
-                confirmButtonColor:
-                    '#7C9CFF',
-            })
+            try {
+
+                const result =
+                    localStorage.getItem(
+                        'analysis_result'
+                    )
+
+                const skills =
+                    localStorage.getItem(
+                        'selected_skills'
+                    )
+
+                if (
+                    !result
+                ) {
+
+                    await showError(
+                        'Export Failed',
+                        'Analysis result not found.'
+                    )
+
+                    return
+                }
+
+                const parsed =
+                    JSON.parse(
+                        result
+                    )
+
+                exportDashboardPdf({
+
+                    industry:
+                        parsed.data
+                            .industry_predictions[0]
+                            .industry,
+
+                    confidence:
+                        parsed.data
+                            .industry_predictions[0]
+                            .probability,
+
+                    inputSkills:
+                        skills
+                            ? JSON.parse(
+                                skills
+                            )
+                            : [],
+
+                    resultJson:
+                        parsed.data,
+                })
+
+                await showSuccess(
+                    'Export Complete',
+                    'Your PDF report has been downloaded.'
+                )
+
+            } catch (
+            error
+            ) {
+
+                console.error(
+                    error
+                )
+
+                await showError(
+                    'Export Failed',
+                    'Unable to generate PDF report.'
+                )
+            }
         }
 
     return (

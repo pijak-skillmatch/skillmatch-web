@@ -30,6 +30,14 @@ import {
 } from '@/lib/api/resume'
 
 import {
+    saveHistory,
+} from '@/lib/api/history'
+
+import {
+    isAuthenticated,
+} from '@/lib/auth/isAuthenticated'
+
+import {
     showSuccess,
     showError,
     showWarning,
@@ -129,6 +137,62 @@ export default function AnalysisForm() {
         )
     }
 
+    const saveHistoryIfLoggedIn =
+        async (
+            response: any,
+            skills: string[],
+            analysisType:
+                'skills' |
+                'resume'
+        ) => {
+
+            if (
+                !isAuthenticated()
+            ) {
+                return
+            }
+
+            try {
+
+                const topIndustry =
+                    response.data
+                        .industry_predictions[0]
+
+                await saveHistory({
+
+                    analysis_type:
+                        analysisType,
+
+                    industry:
+                        topIndustry
+                            .industry,
+
+                    confidence:
+                        topIndustry
+                            .probability,
+
+                    input_skills:
+                        skills,
+
+                    result_json:
+                        response.data,
+                })
+
+            } catch (error) {
+
+                console.error(
+                    'History save failed:',
+                    error
+                )
+
+                if (error instanceof Error) {
+                    console.error(
+                        error.message
+                    )
+                }
+            }
+        }
+
     const handleSkillsAnalysis =
         async (): Promise<boolean> => {
 
@@ -155,6 +219,12 @@ export default function AnalysisForm() {
                 response
             )
 
+            await saveHistoryIfLoggedIn(
+                response,
+                selectedSkills,
+                'skills'
+            )
+
             return true
         }
 
@@ -177,10 +247,19 @@ export default function AnalysisForm() {
                     experience
                 )
 
-            saveAnalysisResult(
-                response,
+            const detectedSkills =
                 response.data
                     ?.detected_skills ?? []
+
+            saveAnalysisResult(
+                response,
+                detectedSkills
+            )
+
+            await saveHistoryIfLoggedIn(
+                response,
+                detectedSkills,
+                'resume'
             )
 
             return true

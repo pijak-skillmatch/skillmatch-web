@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { API_BASE_URL } from "./config";
 
 export interface AnalyzeRequest {
   skills: string[];
@@ -6,7 +6,7 @@ export interface AnalyzeRequest {
 }
 
 export async function analyzeProfile(payload: AnalyzeRequest) {
-  const response = await fetch(`${API_URL}/api/v1/analyze`, {
+  const response = await fetch(`${API_BASE_URL}/analyze`, {
     method: "POST",
 
     headers: {

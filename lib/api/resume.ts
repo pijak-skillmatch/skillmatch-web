@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { API_BASE_URL } from "./config";
 
 export async function analyzeResume(file: File, experience: string) {
   const formData = new FormData();
@@ -7,7 +7,7 @@ export async function analyzeResume(file: File, experience: string) {
 
   formData.append("experience", experience);
 
-  const response = await fetch(`${API_URL}/api/v1/resume/analyze`, {
+  const response = await fetch(`${API_BASE_URL}/resume/analyze`, {
     method: "POST",
     body: formData,
   });
