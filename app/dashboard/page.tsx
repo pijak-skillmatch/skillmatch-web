@@ -7,7 +7,6 @@ import {
 
 import {
     useRouter,
-    useSearchParams,
 } from 'next/navigation'
 
 import Navbar from '@/components/layout/Navbar'
@@ -61,7 +60,6 @@ import {
 export default function DashboardPage() {
 
     const router = useRouter()
-    const searchParams = useSearchParams()
 
     const [
         isAutoExporting,
@@ -112,7 +110,9 @@ export default function DashboardPage() {
                 }
 
                 const shouldExport =
-                    searchParams.get(
+                    new URLSearchParams(
+                        window.location.search
+                    ).get(
                         'export'
                     )
 
@@ -229,7 +229,6 @@ export default function DashboardPage() {
     }, [
         result,
         userSkills,
-        searchParams,
         router,
     ])
 
