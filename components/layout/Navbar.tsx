@@ -89,7 +89,7 @@ export default function Navbar() {
         'See you again soon!'
       )
 
-      router.push('/')
+      window.location.href = '/'
     }
 
   return (
