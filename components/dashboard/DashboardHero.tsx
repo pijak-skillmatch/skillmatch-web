@@ -1,3 +1,5 @@
+import { FiTrendingUp } from 'react-icons/fi'
+
 export default function DashboardHero() {
 
     return (
@@ -44,7 +46,8 @@ export default function DashboardHero() {
                         text-slate-300
                     "
                 >
-                    🚀 AI Career Intelligence
+                    <FiTrendingUp className="h-5 w-5" />
+                    <span>AI Career Intelligence</span>
                 </div>
 
                 <h1
