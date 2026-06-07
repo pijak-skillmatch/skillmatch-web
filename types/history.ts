@@ -1,3 +1,5 @@
+import { AnalysisData } from "./analysis";
+
 export interface SaveHistoryPayload {
   analysis_type: string;
 
@@ -7,7 +9,7 @@ export interface SaveHistoryPayload {
 
   input_skills: string[];
 
-  result_json: Record<string, unknown>;
+  result_json: AnalysisData;
 }
 
 export interface HistoryItem {
@@ -33,7 +35,7 @@ export interface HistoryDetail {
 
   input_skills: string[];
 
-  result_json: Record<string, unknown>;
+  result_json: AnalysisData;
 
   created_at: string;
 }

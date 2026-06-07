@@ -18,6 +18,7 @@ import {
     showLoading,
     closeLoading,
 } from '@/lib/swal'
+import { getPendingAction } from '@/lib/auth/pendingAction'
 
 export default function RegisterPage() {
 
@@ -63,6 +64,21 @@ export default function RegisterPage() {
                     'Account Created',
                     'Your account has been created successfully.'
                 )
+
+                const pendingAction =
+                    getPendingAction()
+
+                if (
+                    pendingAction ===
+                    'export_pdf'
+                ) {
+
+                    router.push(
+                        '/login?export=1'
+                    )
+
+                    return
+                }
 
                 router.push(
                     '/login'
