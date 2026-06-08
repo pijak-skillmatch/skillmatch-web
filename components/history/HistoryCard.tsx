@@ -10,6 +10,12 @@ interface Props {
 
     history: HistoryItem
 
+    selected: boolean
+
+    onSelect: (
+        id: number
+    ) => void
+
     onView: (
         id: number
     ) => void
@@ -18,6 +24,8 @@ interface Props {
 export default function HistoryCard({
     history,
     onView,
+    onSelect,
+    selected,
 }: Props) {
 
     return (
@@ -41,6 +49,25 @@ export default function HistoryCard({
             "
         >
 
+            <button
+                onClick={() =>
+                    onSelect(
+                        history.id
+                    )
+                }
+                className="
+                                    h-5
+                                    w-5
+
+                                    rounded
+
+                                    border
+                                    border-white/20
+                                "
+            >
+                {selected && '✓'}
+            </button>
+
             <div
                 className="
                     flex
@@ -51,6 +78,8 @@ export default function HistoryCard({
             >
 
                 <div>
+
+
 
                     <span
                         className="
