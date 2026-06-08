@@ -54,6 +54,11 @@ export default function HistoryPage() {
         setLoading] =
         useState(true)
 
+    const [
+        selectedReports,
+        setSelectedReports,
+    ] = useState<number[]>([])
+
     useEffect(() => {
 
         const loadHistory =
@@ -201,6 +206,39 @@ export default function HistoryPage() {
                 }
             )
 
+    const toggleSelection = (
+        historyId: number
+    ) => {
+
+        setSelectedReports(
+            previous => {
+
+                if (
+                    previous.includes(
+                        historyId
+                    )
+                ) {
+
+                    return previous.filter(
+                        id =>
+                            id !== historyId
+                    )
+                }
+
+                if (
+                    previous.length >= 2
+                ) {
+                    return previous
+                }
+
+                return [
+                    ...previous,
+                    historyId,
+                ]
+            }
+        )
+    }
+
     return (
         <>
             <Navbar />
@@ -314,6 +352,35 @@ export default function HistoryPage() {
                             setSort
                         }
                     />
+
+                    {
+                        selectedReports.length === 2 && (
+
+                            <button
+                                onClick={() => {
+
+                                    router.push(
+                                        `/history/compare?ids=${selectedReports.join(',')}`
+                                    )
+
+                                }}
+                                className="
+        rounded-xl
+
+        bg-linear-to-r
+        from-(--secondary)
+        to-(--primary)
+
+        px-5 py-3
+
+        text-white
+      "
+                            >
+                                Compare Selected
+                            </button>
+
+                        )
+                    }
 
                     {loading ? (
 
@@ -429,6 +496,14 @@ export default function HistoryPage() {
                                             }
                                             onView={
                                                 handleView
+                                            }
+                                            selected={
+                                                selectedReports.includes(
+                                                    history.id
+                                                )
+                                            }
+                                            onSelect={
+                                                toggleSelection
                                             }
                                         />
 
