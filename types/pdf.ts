@@ -1,4 +1,6 @@
 export interface DashboardPdfData {
+  userName?: string;
+
   industry: string;
 
   confidence: number;

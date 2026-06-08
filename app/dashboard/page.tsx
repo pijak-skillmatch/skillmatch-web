@@ -56,6 +56,7 @@ import {
 import {
     showError,
 } from '@/lib/swal'
+import { getUser } from '@/lib/auth/user'
 
 export default function DashboardPage() {
 
@@ -108,6 +109,9 @@ export default function DashboardPage() {
                 if (!result) {
                     return
                 }
+
+                const currentUser =
+                    getUser()
 
                 const shouldExport =
                     new URLSearchParams(
@@ -172,6 +176,9 @@ export default function DashboardPage() {
                     })
 
                     exportDashboardPdf({
+
+                        userName:
+                            currentUser?.name,
 
                         industry:
                             topIndustry.industry,

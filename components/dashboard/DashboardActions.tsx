@@ -22,10 +22,12 @@ import Swal from 'sweetalert2'
 import {
     setPendingAction,
 } from '@/lib/auth/pendingAction'
+import { getUser } from '@/lib/auth/user'
 
 export default function DashboardActions() {
 
     const router = useRouter()
+    const user = getUser();
 
     const handleNewAnalysis =
         () => {
@@ -149,6 +151,8 @@ export default function DashboardActions() {
                     )
 
                 exportDashboardPdf({
+
+                    userName: user?.name,
 
                     industry:
                         parsed.data

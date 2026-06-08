@@ -1,6 +1,5 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-
 import { DashboardPdfData } from "@/types/pdf";
 
 // Helper memuat gambar
@@ -54,22 +53,32 @@ export async function exportDashboardPdf(data: DashboardPdfData) {
   const summaryY = 40;
   pdf.setDrawColor(PRIMARY);
   pdf.setFillColor(SECONDARY);
-  pdf.roundedRect(margin, summaryY, pageWidth - 2 * margin, 20, 3, 3, "FD");
+  pdf.roundedRect(margin, summaryY, pageWidth - 2 * margin, 30, 3, 3, "FD");
 
   pdf.setTextColor(TEXT_DARK);
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(10);
-  pdf.text("Top Industry::", margin + 5, summaryY + 10);
+
+  pdf.text("Name:", margin + 5, summaryY + 10);
+
+  pdf.text("Top Industry:", margin + 5, summaryY + 20);
+
   pdf.setFont("helvetica", "normal");
-  pdf.text(data.industry, margin + 40, summaryY + 10);
+
+  pdf.text(data.userName ?? "Anonymous", margin + 35, summaryY + 10);
+
+  pdf.text(data.industry, margin + 35, summaryY + 20);
 
   pdf.setFont("helvetica", "bold");
-  pdf.text("Confidence:", margin + 100, summaryY + 10);
+
+  pdf.text("Confidence:", margin + 100, summaryY + 20);
+
   pdf.setFont("helvetica", "normal");
-  pdf.text(`${(data.confidence * 100).toFixed(1)}%`, margin + 130, summaryY + 10);
+
+  pdf.text(`${(data.confidence * 100).toFixed(1)}%`, margin + 130, summaryY + 20);
 
   // ---------- TABEL PREDIKSI INDUSTRI ----------
-  const industryTableY = summaryY + 30;
+  const industryTableY = summaryY + 40;
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(13);
   pdf.setTextColor(PRIMARY);
@@ -207,5 +216,7 @@ export async function exportDashboardPdf(data: DashboardPdfData) {
   }
 
   // Simpan file
-  pdf.save(`skillmatch-report-${new Date().toISOString().slice(0, 10)}.pdf`);
+  const safeName = (data.userName ?? "user").replace(/\s+/g, "-").toLowerCase();
+
+  pdf.save(`skillmatch-${safeName}-${new Date().toISOString().slice(0, 10)}.pdf`);
 }
