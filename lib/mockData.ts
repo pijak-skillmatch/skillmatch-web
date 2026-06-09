@@ -22,32 +22,32 @@ export const features: {
   {
     icon: FiCpu,
     title: "AI Skill Profiling",
-    description: "Analyze your skills and interests using intelligent profiling powered by machine learning.",
+    description: "Analyze your current skills and interests using intelligent profiling powered by machine learning.",
   },
   {
     icon: FiStar,
-    title: "Personalized Career Match",
-    description: "Receive career recommendations tailored specifically to your strengths and goals.",
+    title: "Personalized Career Roadmaps",
+    description: "Receive career recommendations and structural pathways tailored specifically to your strengths and ambitions.",
   },
   {
     icon: FiTrendingUp,
-    title: "Growth Roadmap",
-    description: "Discover which skills to improve next and build a clearer roadmap for your future.",
+    title: "Targeted Learning Paths",
+    description: "Discover which core skills to improve next and follow a step-by-step roadmap toward your dream career.",
   },
   {
     icon: FiZap,
-    title: "Fast Recommendations",
-    description: "Generate intelligent career insights in seconds through an intuitive guided flow.",
+    title: "Instant Career Insights",
+    description: "Generate intelligent competency roadmaps in seconds through a seamless, guided onboarding flow.",
   },
   {
     icon: FiSearch,
-    title: "Deep Skill Analysis",
-    description: "Understand how your abilities align with modern industry demands and opportunities.",
+    title: "Skill Gap Analysis",
+    description: "Understand your exact job readiness and see how your current abilities align with modern industry demands.",
   },
   {
     icon: FiArrowUpRight,
-    title: "Future-Oriented Insights",
-    description: "Explore emerging career paths and technologies relevant to your evolving potential.",
+    title: "Future-Proof Growth",
+    description: "Explore emerging career tracks and tech stacks relevant to your evolving professional potential.",
   },
 ];
 

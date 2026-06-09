@@ -12,9 +12,7 @@ export default function HeroSection() {
 
             {/* Glow */}
             <div className="pointer-events-none absolute left-1/2 -top-32 -z-10 h-112 w-md -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(124,156,255,0.16),transparent_70%)] blur-3xl" />
-
             <div className="pointer-events-none absolute left-0 top-1/4 -z-10 h-88 w-88 rounded-full bg-[radial-gradient(circle,rgba(167,139,250,0.10),transparent_70%)] blur-3xl" />
-
             <div className="pointer-events-none absolute bottom-0 right-0 -z-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(124,156,255,0.10),transparent_70%)] blur-3xl" />
 
             <div className="container-custom">
@@ -24,42 +22,34 @@ export default function HeroSection() {
                         {/* Badge */}
                         <div
                             className="
-                inline-flex items-center gap-2
-
-                rounded-full
-                border border-white/10
-                bg-white/5
-
-                px-4 py-2
-
-                text-xs font-semibold uppercase
-                tracking-[0.18em]
-                text-slate-300
-
-                backdrop-blur-md
-              "
+                                inline-flex items-center gap-2
+                                rounded-full
+                                border border-white/10
+                                bg-white/5
+                                px-4 py-2
+                                text-xs font-semibold uppercase
+                                tracking-[0.18em]
+                                text-slate-300
+                                backdrop-blur-md
+                            "
                         >
                             <span className="h-2 w-2 rounded-full bg-(--secondary) shadow-[0_0_16px_rgba(167,139,250,0.7)]" />
-
-                            Next-Gen Career Discovery
+                            Next-Gen Skill Mapping & Career Roadmaps
                         </div>
 
                         {/* Heading */}
                         <h1
                             className="
-                mt-6
-                max-w-[11ch]
-
-                text-[clamp(3rem,6vw,5.2rem)]
-                font-bold
-                leading-[0.96]
-                tracking-tighter
-
-                text-white
-              "
+                                mt-6
+                                max-w-[14ch]
+                                text-[clamp(2.8rem,5.5vw,4.8rem)]
+                                font-bold
+                                leading-[1.02]
+                                tracking-tighter
+                                text-white
+                            "
                         >
-                            Find a career path that{' '}
-
+                            Map your skills & discover the career path that{' '}
                             <GradientText>
                                 actually fits you.
                             </GradientText>
@@ -68,28 +58,23 @@ export default function HeroSection() {
                         {/* Description */}
                         <p
                             className="
-                mt-6
-                max-w-xl
-
-                text-lg leading-8
-                text-slate-300
-
-                md:text-xl
-              "
+                                mt-6
+                                max-w-xl
+                                text-lg leading-8
+                                text-slate-300
+                                md:text-xl
+                            "
                         >
-                            AI-powered career recommendations based on your skills,
-                            interests, and goals. Discover opportunities that truly align
-                            with your potential.
+                            AI-powered career recommendations tailored to your expertise, interests, and ambitions. Identify skill gaps and unlock structured learning paths to maximize your future potential.
                         </p>
 
                         {/* CTA */}
                         <div className="mt-9 flex flex-wrap items-center gap-4">
                             <Button href="/analysis">
-                                Get Started
+                                Get Started Now
                             </Button>
-
                             <Button variant="secondary">
-                                See how it works
+                                Explore Features
                             </Button>
                         </div>
 
@@ -99,9 +84,8 @@ export default function HeroSection() {
                                 <div className="text-2xl font-bold tracking-tight text-white">
                                     50k+
                                 </div>
-
                                 <div className="mt-1 text-sm text-slate-400">
-                                    Users explored
+                                    Active Users
                                 </div>
                             </div>
 
@@ -109,9 +93,8 @@ export default function HeroSection() {
                                 <div className="text-2xl font-bold tracking-tight text-white">
                                     98%
                                 </div>
-
                                 <div className="mt-1 text-sm text-slate-400">
-                                    Match clarity
+                                    Recommendation Accuracy
                                 </div>
                             </div>
 
@@ -119,9 +102,8 @@ export default function HeroSection() {
                                 <div className="text-2xl font-bold tracking-tight text-white">
                                     Fast
                                 </div>
-
                                 <div className="mt-1 text-sm text-slate-400">
-                                    Guided experience
+                                    Instant Roadmaps
                                 </div>
                             </div>
                         </div>
@@ -144,7 +126,6 @@ export default function HeroSection() {
                             {/* Dashboard */}
                             <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/70 m-5">
                                 <div className="absolute inset-0 bg-linear-to-tr from-(--secondary)/10 via-transparent to-(--primary)/10" />
-
                                 <img
                                     src="/Dashboard.png"
                                     alt="Dashboard Preview"
@@ -155,22 +136,20 @@ export default function HeroSection() {
                             {/* Bottom tags */}
                             <div className="flex flex-wrap gap-2 px-5 pb-5">
                                 {[
-                                    'AI recommendations',
-                                    'Skill matching',
-                                    'Career insights',
-                                    'Fast onboarding',
+                                    'AI Career Roadmaps',
+                                    'Skill Gap Analysis',
+                                    'Personalized Insights',
+                                    'Fast Onboarding',
                                 ].map((item) => (
                                     <span
                                         key={item}
                                         className="
-                      rounded-full
-                      border border-white/10
-                      bg-white/5
-
-                      px-3 py-1
-
-                      text-xs text-slate-300
-                    "
+                                            rounded-full
+                                            border border-white/10
+                                            bg-white/5
+                                            px-3 py-1
+                                            text-xs text-slate-300
+                                        "
                                     >
                                         {item}
                                     </span>
@@ -185,34 +164,26 @@ export default function HeroSection() {
                     <a
                         href="#features"
                         className="
-              group inline-flex flex-col items-center gap-2
-
-              text-sm text-slate-400
-
-              transition-colors duration-300
-
-              hover:text-white
-            "
+                            group inline-flex flex-col items-center gap-2
+                            text-sm text-slate-400
+                            transition-colors duration-300
+                            hover:text-white
+                        "
                     >
                         <span className="text-xs uppercase tracking-[0.22em]">
                             Scroll to explore
                         </span>
-
                         <span
                             className="
-                flex h-11 w-11 items-center justify-center
-
-                rounded-full
-                border border-white/10
-                bg-white/5
-
-                backdrop-blur-md
-
-                transition-all duration-300
-
-                group-hover:border-white/20
-                group-hover:bg-white/10
-              "
+                                flex h-11 w-11 items-center justify-center
+                                rounded-full
+                                border border-white/10
+                                bg-white/5
+                                backdrop-blur-md
+                                transition-all duration-300
+                                group-hover:border-white/20
+                                group-hover:bg-white/10
+                            "
                         >
                             <FiChevronDown className="text-2xl transition-transform duration-300 group-hover:translate-y-0.5" />
                         </span>
