@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useRef, useState } from 'react'
 import { FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 
