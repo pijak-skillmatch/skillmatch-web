@@ -24,7 +24,6 @@ import CompareLoading from
 
 import CompareInsights
     from '@/components/history/CompareInsights'
-import CareerGrowthScore from '@/components/history/CareerGrowthScore'
 import SkillCountChart from '@/components/history/charts/SkillCountChart'
 import ConfidenceComparisonChart from '@/components/history/charts/ConfidenceComparisonChart'
 import AICareerInsight
@@ -253,18 +252,6 @@ export default function ComparePage() {
                                 </div>
 
                             )}
-
-                        {
-                            leftReport &&
-                            rightReport && (
-
-                                <CareerGrowthScore
-                                    oldReport={leftReport}
-                                    newReport={rightReport}
-                                />
-
-                            )
-                        }
 
                         {
                             insightLoading ? (
