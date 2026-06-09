@@ -260,7 +260,7 @@ export default function FeaturesModal({ isOpen, onClose }: FeaturesModalProps) {
                                     <span
                                         className={`
                       text-[10px] font-bold tabular-nums
-                      ${i === activeIndex ? 'text-[var(--primary)]' : 'text-slate-600'}
+                      ${i === activeIndex ? 'text-(--primary)' : 'text-slate-600'}
                     `}
                                     >
                                         {f.number}
@@ -359,7 +359,7 @@ export default function FeaturesModal({ isOpen, onClose }: FeaturesModalProps) {
                                         <button
                                             key={i}
                                             onClick={() => setActiveIndex(i)}
-                                            className={`h-1.5 rounded-full transition-all ${i === activeIndex ? 'w-6 bg-[var(--primary)]' : 'w-1.5 bg-white/20'
+                                            className={`h-1.5 rounded-full transition-all ${i === activeIndex ? 'w-6 bg-(--primary)' : 'w-1.5 bg-white/20'
                                                 }`}
                                         />
                                     ))}
